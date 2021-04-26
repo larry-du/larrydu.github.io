@@ -20,6 +20,7 @@ function main (){
 	renderTitleButton();
 	render ();
 	eventBinding();
+	initTable()
 }
 
 function renderTitleButton(){
@@ -77,34 +78,37 @@ function eventBinding(){
 		})
 	});
 	tableButton.addEventListener("click",(event)=>{
-		let tableInfo ={};
-		const from = {	
-			addTable:createTable,
-			addCol:createTd
-		}
+		// let tableInfo ={};
+		// const from = {	
+		// 	addT:createTable,
+		// 	addCol:createTd
+		// }
 		const isTableButton = event.target.classList.contains("addTable");
 		if(!isTableButton)return
 	
 		const tableCount = document.querySelector(".tableCount");
 		tableCount.classList.toggle("noShow");
 
-		const createTableButton = tableCount.querySelector(".createTable");
-		const tableRow = tableCount.querySelector("#tableRow");
-		const tableCol = tableCount.querySelector("#tableCol");
-		tableRow.addEventListener("input",(event)=>{
-			tableInfo = {...tableInfo,row:event.target.value};
-		})
-		tableCol.addEventListener("input",(event)=>{
-			tableInfo = {...tableInfo,col:event.target.value};
-		})
-		createTableButton.addEventListener("click",()=>{
-			tableRow.value="";
-			tableCol.value="";
-			if(!tableInfo.row || !tableInfo.col) return alert("Please Enter row & col Number");
-			addTable(tableInfo,from);
-			tableCount.classList.add("noShow");
-		})
+		// const createTableButton = tableCount.querySelector(".createTable");
+		// const tableRow = tableCount.querySelector("#tableRow");
+		// const tableCol = tableCount.querySelector("#tableCol");
+		// tableRow.addEventListener("input",(event)=>{
+		// 	tableInfo = {...tableInfo,row:event.target.value};
+		// })
+		// tableCol.addEventListener("input",(event)=>{
+		// 	tableInfo = {...tableInfo,col:event.target.value};
+		// })
+		// createTableButton.addEventListener("click",()=>{
+		// 	tableRow.value="";
+		// 	tableCol.value="";
+		// 	if(!tableInfo.row || !tableInfo.col) return alert("Please Enter row & col Number");
+		// 	addTable(tableInfo,from);
+		// 	tableCount.classList.add("noShow");
+		// 	// createTableButton.removeEventListener
+		// })
 	})
+	
+		// tableCount.classList.toggle("noShow");
 	// tableButton.addEventListener("click",(event)=>{
 	// 	test(event)
 	// })
@@ -121,6 +125,33 @@ function eventBinding(){
 		console.log(all);
 	})
 }
+
+function initTable(){
+	const tableCount = document.querySelector(".tableCount");
+	let tableInfo ={};
+	const from = {	
+		addT:createTable,
+		addCol:createTd
+	}
+	const createTableButton = tableCount.querySelector(".createTable");
+	const tableRow = tableCount.querySelector("#tableRow");
+	const tableCol = tableCount.querySelector("#tableCol");
+	tableRow.addEventListener("input",(event)=>{
+		tableInfo = {...tableInfo,row:event.target.value};
+	})
+	tableCol.addEventListener("input",(event)=>{
+		tableInfo = {...tableInfo,col:event.target.value};
+	})
+	createTableButton.addEventListener("click",()=>{
+		tableRow.value="";
+		tableCol.value="";
+		if(!tableInfo.row || !tableInfo.col) return alert("Please Enter row & col Number");
+		addTable(tableInfo,from);
+		tableCount.classList.add("noShow");
+	})
+}
+
+
 
 
 // function test(event){

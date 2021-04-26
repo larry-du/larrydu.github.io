@@ -1,4 +1,4 @@
-function createHeadTag (headerTag){
+function createHeadTag(headerTag) {
 	return `
 		<${headerTag} class="title target" contenteditable="true">
 			title 
@@ -7,7 +7,7 @@ function createHeadTag (headerTag){
 	`
 }
 
-function createTextTag (textType){
+function createTextTag(textType) {
 	return `
 		<${textType} class="${textType}-text target" contenteditable="true">
 	    	text
@@ -16,17 +16,17 @@ function createTextTag (textType){
 	`
 }
 
-function createList (listType){
+function createList(listType) {
 	return `
 	<${listType} class="listTitle target" contenteditable="true">
 		List Title
 		<button class="close">X</button>
-		${ createListItem ()}
+		${createListItem()}
 	</${listType}>
 	`
 }
 
-function createListItem (){
+function createListItem() {
 	return `
 	<li class="listItem target" contenteditable="true">
 		List Item
@@ -34,19 +34,19 @@ function createListItem (){
 	`
 }
 
-function createTable(){
+function createTable() {
 	return `
-		<table class="tableFrom"></table>
+		<table class="tableForm"></table>
 	`
 }
-function createTd(){
-	return`
+function createTd() {
+	return `
       <td class="target" contenteditable="true">Context</td>
 	`
 }
 
 
-function createImgUpload(){
+function createImgUpload() {
 	return `
 	<div>
 		<label>Choose file to upload
@@ -56,7 +56,7 @@ function createImgUpload(){
 	`
 }
 
-function createAddressInput(){
+function createAddressInput() {
 	return `
 	<label>
 		<input class="inputAddress">
@@ -66,12 +66,12 @@ function createAddressInput(){
 }
 
 export {
-  createHeadTag,
-  createTextTag,
-  createList,
-  createListItem,
-  createImgUpload,
-  createAddressInput,
-  createTable,
-  createTd
+	createHeadTag,
+	createTextTag,
+	createList,
+	createListItem,
+	createImgUpload,
+	createAddressInput,
+	createTable,
+	createTd
 }
