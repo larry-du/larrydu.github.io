@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/index.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="editorArea">
+    <div class="headerButton"></div>
+    <div class="textButton">
+      <button class="normalText" data-textType="p">
+        < p />
+      </button>
+      <button class="normalText" data-textType="span">
+        < span />
+      </button>
+    </div>
+    <div class="listButton">
+      <button class="addList" data-listType="ul">List</button>
+      <button class="addList" data-listType="ol">OL</button>
+    </div>
+    <div class="tableButton">
+      <button class="addTable">table</button>
+      <div class="tableCount noShow">
+        <label for="tableRow"> row
+          <input id="tableRow" class="tableInput" type="text">
+        </label>
+        <label for="tableCol"> col
+          <input id="tableCol" class="tableInput" type="text">
+        </label>
+        <button class="createTable">Create Table</button>
+      </div>
+    </div>
+    <div class="imgButton">
+      <button class="addImg">img</button>
+    </div>
+  </div>
+  <div id="render-area">
+    <div id="content"></div>
+  </div>
+  <button class="submit">submit</button>
+  <script type="module" src="./js/index.js"></script>
+</body>
+
+</html>
