@@ -37,22 +37,43 @@ function createListItem() {
 function createTable() {
 	return `
 		<table class="tableForm"></table>
+		<button class="close">X</button>
 	`
 }
 function createTd() {
 	return `
-      <td class="target" contenteditable="true">Context</td>
+      <td class="tdList target" contenteditable="true">Context</td>
+	`
+}
+
+function createIframe(linkAddress){
+	return`
+	<div class="videoArea">
+		<iframe width="560" height="315" frameborder="0" allowfullscreen=""
+		allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+		src="${linkAddress}"
+		></iframe>
+		<button class="close">X</button>
+	</div>
 	`
 }
 
 
 function createImgUpload() {
 	return `
-	<div>
-		<label>Choose file to upload
-			<input type="file" accept=".png, .jpg, .jpeg">
+	<div class="uploadArea">
+		<label class="imgUploadTitle">Choose image file to upload
+			<input class="imgUpload" type="file" accept=".png, .jpg, .jpeg">
 		</label>
 	</div>
+	`
+}
+
+function createImage(base64){
+	return`
+	<figure>
+		<img src="${base64}">
+	</figure>
 	`
 }
 
@@ -73,5 +94,7 @@ export {
 	createImgUpload,
 	createAddressInput,
 	createTable,
-	createTd
+	createTd,
+	createIframe,
+	createImage
 }

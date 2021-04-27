@@ -6,21 +6,26 @@ import {
 	createImgUpload,
 	createAddressInput,
 	createTable,
-  createTd
+  	createTd,
+	createIframe,
+	createImage
 } from "./template/AllTags.js";
 import {
 	addTitleTag,
 	addTextTag,
 	addList,
 	addImgUpload,
-	addTable
+	addTable,
+	addIframe,
+	addRandomImg 
 } from "./component/AddTag.js";
 
 function main (){
 	renderTitleButton();
 	render ();
 	eventBinding();
-	initTable()
+	initTable();
+	initVideo();
 }
 
 function renderTitleButton(){
@@ -45,15 +50,13 @@ function eventBinding(){
 	// const AButton = document.querySelector(".ALinkButton");
 	const listButton = document.querySelector(".listButton");
 	const tableButton = document.querySelector(".tableButton");
+	const iframeButton = document.querySelector(".iframeButton")
 	const imgButton = document.querySelector(".addImg");
 
 	headerButton.addEventListener("click",(event)=>{
 		const isHeadButton = event.target.classList.contains("addTitle");
 		if(!isHeadButton) return
-		addTitleTag({
-			headTag:createHeadTag(event.target.innerText),
-			addressInput:createAddressInput()
-		});
+		addTitleTag(createHeadTag(event.target.innerText));
 	});
 	textButton.addEventListener("click",(event)=>{
 		const isTextButton = event.target.classList.contains("normalText");
@@ -61,8 +64,7 @@ function eventBinding(){
 		const textType = event.target.dataset.texttype;
 		addTextTag({
 			textType,
-			textTag:createTextTag(textType),
-			addressInput:createAddressInput()
+			textTag:createTextTag(textType)
 		});
 	});
 	// AButton.addEventListener("click",()=>{
@@ -72,66 +74,66 @@ function eventBinding(){
 		const isListButton = event.target.classList.contains("addList");
 		if(!isListButton)return
 		const listType = event.target.dataset.listtype;
-		addList({
-			listTitle:createList(listType),
-			addressInput:createAddressInput()
-		})
+		addList(createList(listType));
 	});
 	tableButton.addEventListener("click",(event)=>{
-		// let tableInfo ={};
-		// const from = {	
-		// 	addT:createTable,
-		// 	addCol:createTd
-		// }
 		const isTableButton = event.target.classList.contains("addTable");
 		if(!isTableButton)return
 	
 		const tableCount = document.querySelector(".tableCount");
 		tableCount.classList.toggle("noShow");
-
-		// const createTableButton = tableCount.querySelector(".createTable");
-		// const tableRow = tableCount.querySelector("#tableRow");
-		// const tableCol = tableCount.querySelector("#tableCol");
-		// tableRow.addEventListener("input",(event)=>{
-		// 	tableInfo = {...tableInfo,row:event.target.value};
-		// })
-		// tableCol.addEventListener("input",(event)=>{
-		// 	tableInfo = {...tableInfo,col:event.target.value};
-		// })
-		// createTableButton.addEventListener("click",()=>{
-		// 	tableRow.value="";
-		// 	tableCol.value="";
-		// 	if(!tableInfo.row || !tableInfo.col) return alert("Please Enter row & col Number");
-		// 	addTable(tableInfo,from);
-		// 	tableCount.classList.add("noShow");
-		// 	// createTableButton.removeEventListener
-		// })
+	})
+	iframeButton.addEventListener("click",(event)=>{
+		const isIframeButton = event.target.classList.contains("addIframe");
+		if(!isIframeButton)return
+	
+		const videoLink = document.querySelector(".videoLink");
+		videoLink.classList.toggle("noShow");
 	})
 	
-		// tableCount.classList.toggle("noShow");
-	// tableButton.addEventListener("click",(event)=>{
-	// 	test(event)
-	// })
 	imgButton.addEventListener("click",(event)=>{
-		console.log(event);
-		addImgUpload(createImgUpload());
+		// const currentFocus = window.getSelection()
+		// currentFocus.insertAdjacentHTML('afterend',createImgUpload())
+		// if(!currentFocus){
+		// 	console.log();
+		// }
+		// console.log(currentFocus);
+		//點擊後兩組 function 上傳檔案 一種為元素內 一種為不指定元素
+		addRandomImg(createImgUpload,createImage)
 	});
 	submit.addEventListener("click",()=>{
 		const [...targets] = document.querySelectorAll(".target")
 		targets.forEach(dom=>{
 			dom.removeAttribute("contenteditable")
 		})
-		const all = document.querySelector("#content")
+		const all = document.querySelector("#content");
 		console.log(all);
 	})
+}
+
+function initVideo(){
+	let linkAddress = ""
+	const videoLink = document.querySelector(".videoLink");
+	const createVideoLink = videoLink.querySelector(".createVideoLink");
+	const videoInput = videoLink.querySelector(".videoInput");
+	videoInput.addEventListener("input",(event)=>{
+		linkAddress = event.target.value;
+	})
+	createVideoLink.addEventListener("click",()=>{
+		videoInput.value="";
+		if(!linkAddress) return alert("Please Enter Link");
+		addIframe(linkAddress,createIframe)
+		videoLink.classList.add("noShow");
+	})
+
 }
 
 function initTable(){
 	const tableCount = document.querySelector(".tableCount");
 	let tableInfo ={};
 	const from = {	
-		addT:createTable,
-		addCol:createTd
+		createTable,
+		createTd
 	}
 	const createTableButton = tableCount.querySelector(".createTable");
 	const tableRow = tableCount.querySelector("#tableRow");
@@ -146,45 +148,10 @@ function initTable(){
 		tableRow.value="";
 		tableCol.value="";
 		if(!tableInfo.row || !tableInfo.col) return alert("Please Enter row & col Number");
-		addTable(tableInfo,from);
+		addTable(tableInfo,from,createAddressInput());
 		tableCount.classList.add("noShow");
 	})
 }
-
-
-
-
-// function test(event){
-// 	let tableInfo ={};
-// 		const from = {	
-// 			addTable:createTable,
-// 			addCol:createTd
-// 		}
-// 		const isTableButton = event.target.classList.contains("addTable");
-// 		if(!isTableButton)return
-	
-// 		const tableCount = document.querySelector(".tableCount");
-// 		tableCount.classList.toggle("noShow");
-
-// 		const createTableButton = tableCount.querySelector(".createTable");
-// 		const tableRow = tableCount.querySelector("#tableRow");
-// 		const tableCol = tableCount.querySelector("#tableCol");
-// 		tableRow.addEventListener("input",(event)=>{
-// 			tableInfo = {...tableInfo,row:event.target.value};
-// 		})
-// 		tableCol.addEventListener("input",(event)=>{
-// 			tableInfo = {...tableInfo,col:event.target.value};
-// 		})
-// 		createTableButton.addEventListener("click",()=>{
-// 			tableRow.value="";
-// 			tableCol.value="";
-// 			if(!tableInfo.row || !tableInfo.col) return alert("Please Enter row & col Number");
-// 			addTable(tableInfo,from);
-// 			tableCount.classList.add("noShow");
-// 		})
-// }
-
-
 
 main ()
 
