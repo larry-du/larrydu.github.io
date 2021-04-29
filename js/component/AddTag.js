@@ -1,25 +1,24 @@
 const content = document.querySelector("#content");
 
-function addTitleTag(headTag) {
-	content.insertAdjacentHTML('beforeend', headTag);
+function addTitleTag({titleTag,createSubButton}) {
+	content.insertAdjacentHTML('beforeend', titleTag);
 	const [...titles] = document.querySelectorAll(".title");
 	const lastData = titles[titles.length-1];
 	lastData.addEventListener("click", (event) => {
-			addRandomLink(event.target);
+			addRandomLink(event.target,createSubButton);
 		});
 }
 
-
-function addTextTag({ textType, textTag}) {
+function addTextTag({ textType, textTag,createSubButton}) {
 	content.insertAdjacentHTML('beforeend', textTag);
 	const [...texts] = document.querySelectorAll(`.${textType}-text`);
 	const lastData = texts[texts.length-1];
 		lastData.addEventListener("click", (event) => {
-			addRandomLink(event.target);
+			addRandomLink(event.target,createSubButton);
 		});
 }
 
-function addList(listTitle) {
+function addListTag({listTitle,createSubButton}) {
 	content.insertAdjacentHTML('beforeend', listTitle);
 	const [...listTitles] = document.querySelectorAll(".listTitle");
 	const lastData = listTitles[listTitles.length-1];
@@ -28,27 +27,27 @@ function addList(listTitle) {
 		const isTitle = event.target.classList.contains("listTitle");
 		const isItem = event.target.classList.contains("listItem");
 		if (isTitle) {
-			addRandomLink(event.target);
+			addRandomLink(event.target,createSubButton);
 		}
 		if (isItem) {
-			addRandomLink(event.target);
+			addRandomLink(event.target,createSubButton);
 		}
 	})
 }
 
-function addTable({ row, col }, { createTable, createTd }) {
-	content.insertAdjacentHTML('beforeend', `<div class="tableArea">${createTable()}</div>`);
+function addTableTag({ row, col }, { createTableArea,createTbody,createTr,createTd },createSubButton) {
+	content.insertAdjacentHTML('beforeend', createTableArea());
 
 	const totalRow = Array(Number(row)).fill(0);
 	const totalCol = Array(Number(col)).fill(0);
 
 	const [...tableForms] = document.querySelectorAll(".tableForm");
 	const lastData = tableForms[tableForms.length - 1];
-	lastData.insertAdjacentHTML('beforeend', '<tbody class="tbody"></tbody>');
+	lastData.insertAdjacentHTML('beforeend', createTbody());
 	const tbody = lastData.querySelector(".tbody");
 
 	totalRow.forEach((rowData, rowIndex) => {
-		tbody.insertAdjacentHTML('beforeend', `<tr class="rowItem-${rowIndex + 1}"></tr>`);
+		tbody.insertAdjacentHTML('beforeend', createTr(rowIndex));
 		const rowItem = tbody.querySelector(`.rowItem-${rowIndex + 1}`);
 		totalCol.forEach(() => {
 			rowItem.insertAdjacentHTML('beforeend', createTd());
@@ -58,26 +57,42 @@ function addTable({ row, col }, { createTable, createTd }) {
 	const [...tdLists] = document.querySelectorAll(".tdList");
 	tdLists.forEach(tdList=>{
 		tdList.addEventListener("click",(event)=>{
-			addRandomLink(event.target);
+			addRandomLink(event.target,createSubButton);
 		})
 	})
 }
 
-function addRandomImg(createImgUpload,createImage){
-  const currentFocus = window.getSelection().anchorNode.parentNode
-  currentFocus.insertAdjacentHTML('afterend',createImgUpload())
+function addLastPositionImg(createImgUpload,createImage){
+	content.insertAdjacentHTML('beforeend', createImgUpload());
+	const imgUpload = document.querySelector(".imgUpload")
+	imgUpload.addEventListener("change",(event)=>{
+		let reader = new FileReader();
+		reader.readAsDataURL(event.target.files[0]);
+		reader.addEventListener('load',(dataEvent)=>{
+				const uploadArea = content.querySelector(".uploadArea")
+				content.insertAdjacentHTML('beforeend',createImage(dataEvent.target.result))
+				uploadArea.remove()
+		})
+  })
+}
+
+function addRandomImg(currentFocus,createImgUpload,createImage){
+  const currentParent = currentFocus.parentNode
+	if(currentParent.localName==="button") return alert("點擊編輯區")
+  currentFocus.insertAdjacentHTML('beforeend',createImgUpload())
   const imgUpload = document.querySelector(".imgUpload")
   imgUpload.addEventListener("change",(e)=>{
     let reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.addEventListener('load',(event)=>{
+			const uploadArea = content.querySelector(".uploadArea")
       currentFocus.insertAdjacentHTML('beforeend',createImage(event.target.result))
+			uploadArea.remove()
     })
   })
-
 }
 
-function addRandomLink(currentDom){
+function addRandomLink(currentDom,createSubButton){
   const isCollapse = window.getSelection().isCollapsed;
   const isClickTwice = currentDom.querySelector(".showLink");
 	const isShowLinkButton = currentDom.classList.contains("showLink");
@@ -87,10 +102,13 @@ function addRandomLink(currentDom){
 	const isEmpty = /\s/.test(`${selectedString}`);
 	if (isEmpty) return
 
-	currentDom.insertAdjacentHTML('beforeend',`<button class="showLink">link</button>`);
+	currentDom.insertAdjacentHTML('beforeend',createSubButton());
 	const link = currentDom.querySelector(".showLink");
 
-	link.addEventListener("click",()=>{
+	link.addEventListener("click",addLinkAddress(currentDom,selectedString))
+}
+
+function addLinkAddress(currentDom,selectedString){
 		currentDom.insertAdjacentHTML('beforeend',`<input class="typeAddress">`);
 		const typeAddress = currentDom.querySelector(".typeAddress");
 		typeAddress.addEventListener("change",(typeAddressEvent)=>{
@@ -106,15 +124,10 @@ function addRandomLink(currentDom){
 				}
 			})
 		})
-	})
 }
 
-function addIframe(linkAddress,createIframe){
-	content.insertAdjacentHTML('beforeend', `${createIframe(linkAddress)}`);
-}
-
-function addImgUpload(createImgUpload) {
-	content.insertAdjacentHTML('beforeend', createImgUpload);
+function addIframeTag(linkAddress,createIframe){
+	content.insertAdjacentHTML('beforeend', createIframe(linkAddress));
 }
 
 content.addEventListener("click", (event) => {
@@ -125,9 +138,9 @@ content.addEventListener("click", (event) => {
 export { 
 	addTextTag, 
 	addTitleTag, 
-	addList, 
-	addImgUpload, 
-	addTable,
-	addIframe,
-  addRandomImg 
+	addListTag, 
+	addTableTag,
+	addIframeTag,
+  addRandomImg,
+	addLastPositionImg 
 }

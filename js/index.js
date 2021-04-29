@@ -4,20 +4,22 @@ import {
 	createTextTag,
 	createList,
 	createImgUpload,
-	createAddressInput,
-	createTable,
-  	createTd,
+	createTableArea,
+	createTbody,
+	createTr,
+  createTd,
 	createIframe,
-	createImage
+	createImage,
+	createSubButton
 } from "./template/AllTags.js";
 import {
 	addTitleTag,
 	addTextTag,
-	addList,
-	addImgUpload,
-	addTable,
-	addIframe,
-	addRandomImg 
+	addListTag,
+	addTableTag,
+	addIframeTag,
+	addRandomImg,
+	addLastPositionImg 
 } from "./component/AddTag.js";
 
 function main (){
@@ -47,68 +49,81 @@ function eventBinding(){
 	const submit = document.querySelector(".submit");
 	const headerButton = document.querySelector(".headerButton");
 	const textButton = document.querySelector(".textButton");
-	// const AButton = document.querySelector(".ALinkButton");
 	const listButton = document.querySelector(".listButton");
 	const tableButton = document.querySelector(".tableButton");
-	const iframeButton = document.querySelector(".iframeButton")
+	const iframeButton = document.querySelector(".iframeButton");
 	const imgButton = document.querySelector(".addImg");
 
-	headerButton.addEventListener("click",(event)=>{
-		const isHeadButton = event.target.classList.contains("addTitle");
-		if(!isHeadButton) return
-		addTitleTag(createHeadTag(event.target.innerText));
-	});
-	textButton.addEventListener("click",(event)=>{
-		const isTextButton = event.target.classList.contains("normalText");
-		if(!isTextButton) return
-		const textType = event.target.dataset.texttype;
-		addTextTag({
-			textType,
-			textTag:createTextTag(textType)
-		});
-	});
-	// AButton.addEventListener("click",()=>{
-	// 	addATag(createATag());
-	// });
-	listButton.addEventListener("click",(event)=>{
-		const isListButton = event.target.classList.contains("addList");
-		if(!isListButton)return
-		const listType = event.target.dataset.listtype;
-		addList(createList(listType));
-	});
-	tableButton.addEventListener("click",(event)=>{
-		const isTableButton = event.target.classList.contains("addTable");
-		if(!isTableButton)return
+	headerButton.addEventListener("click",addTitle);
+	textButton.addEventListener("click",addText);
+
+	listButton.addEventListener("click",addList);
+	tableButton.addEventListener("click",addTable);
+	iframeButton.addEventListener("click",addIframe);
 	
-		const tableCount = document.querySelector(".tableCount");
-		tableCount.classList.toggle("noShow");
-	})
-	iframeButton.addEventListener("click",(event)=>{
-		const isIframeButton = event.target.classList.contains("addIframe");
-		if(!isIframeButton)return
-	
-		const videoLink = document.querySelector(".videoLink");
-		videoLink.classList.toggle("noShow");
-	})
-	
-	imgButton.addEventListener("click",(event)=>{
-		// const currentFocus = window.getSelection()
-		// currentFocus.insertAdjacentHTML('afterend',createImgUpload())
-		// if(!currentFocus){
-		// 	console.log();
-		// }
-		// console.log(currentFocus);
-		//點擊後兩組 function 上傳檔案 一種為元素內 一種為不指定元素
-		addRandomImg(createImgUpload,createImage)
+	imgButton.addEventListener("click",addImg);
+	submit.addEventListener("click",submitDom);
+}
+
+function addTitle(event){
+	const isHeadButton = event.target.classList.contains("addTitle");
+	if(!isHeadButton) return
+	addTitleTag({
+		titleTag:createHeadTag(event.target.innerText),
+		createSubButton
 	});
-	submit.addEventListener("click",()=>{
-		const [...targets] = document.querySelectorAll(".target")
-		targets.forEach(dom=>{
-			dom.removeAttribute("contenteditable")
-		})
-		const all = document.querySelector("#content");
-		console.log(all);
-	})
+}
+
+function addText(event){
+	const isTextButton = event.target.classList.contains("normalText");
+	if(!isTextButton) return
+	const textType = event.target.dataset.texttype;
+	addTextTag({
+		textType,
+		textTag:createTextTag(textType),
+		createSubButton
+	});
+}
+
+function addList(event){
+	const isListButton = event.target.classList.contains("addList");
+	if(!isListButton)return
+	const listType = event.target.dataset.listtype;
+	addListTag({
+		listTitle:createList(listType),
+		createSubButton
+	});
+}
+
+function addTable(event){
+	const isTableButton = event.target.classList.contains("addTable");
+	if(!isTableButton)return
+
+	const tableCount = document.querySelector(".tableCount");
+	tableCount.classList.toggle("noShow");
+}
+
+function addIframe(event){
+	const isIframeButton = event.target.classList.contains("addIframe");
+	if(!isIframeButton)return
+
+	const videoLink = document.querySelector(".videoLink");
+	videoLink.classList.toggle("noShow");
+}
+
+function addImg(){
+	const currentFocus = window.getSelection().anchorNode;
+	// // console.log(currentFocus.parentNode.classList.contains("submit"));
+	// if(currentFocus){
+	// 	console.log(currentFocus.parentNode);
+	// 	const isSubmitButton = currentFocus.parentNode.classList.contains("submit")
+	// 	// console.log(isSubmitButton);
+	// 	if(isSubmitButton)	return addLastPositionImg(createImgUpload,createImage);
+	// } else {
+	// 	return addLastPositionImg(createImgUpload,createImage);
+	// }
+	if(!currentFocus)return addLastPositionImg(createImgUpload,createImage);
+	addRandomImg(currentFocus,createImgUpload,createImage);
 }
 
 function initVideo(){
@@ -120,9 +135,9 @@ function initVideo(){
 		linkAddress = event.target.value;
 	})
 	createVideoLink.addEventListener("click",()=>{
-		videoInput.value="";
 		if(!linkAddress) return alert("Please Enter Link");
-		addIframe(linkAddress,createIframe)
+		addIframeTag(linkAddress,createIframe)
+		videoInput.value="";
 		videoLink.classList.add("noShow");
 	})
 
@@ -131,8 +146,10 @@ function initVideo(){
 function initTable(){
 	const tableCount = document.querySelector(".tableCount");
 	let tableInfo ={};
-	const from = {	
-		createTable,
+	const from = {
+		createTableArea,
+		createTbody,	
+		createTr,
 		createTd
 	}
 	const createTableButton = tableCount.querySelector(".createTable");
@@ -148,9 +165,22 @@ function initTable(){
 		tableRow.value="";
 		tableCol.value="";
 		if(!tableInfo.row || !tableInfo.col) return alert("Please Enter row & col Number");
-		addTable(tableInfo,from,createAddressInput());
+		addTableTag(tableInfo,from,createSubButton);
 		tableCount.classList.add("noShow");
 	})
+}
+
+function submitDom(){
+		const [...targets] = document.querySelectorAll(".target");
+		const [...closeButtons]= document.querySelectorAll(".close")
+		targets.forEach(dom=>{
+			dom.removeAttribute("contenteditable")
+		})
+		closeButtons.forEach(close=>{
+			close.remove()
+		})
+		const all = document.querySelector("#content");
+		console.log(all);
 }
 
 main ()

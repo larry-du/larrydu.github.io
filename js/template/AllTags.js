@@ -1,6 +1,6 @@
 function createHeadTag(headerTag) {
 	return `
-		<${headerTag} class="title target" contenteditable="true">
+		<${headerTag} class="title target getClose" contenteditable="true">
 			title 
 			<button class="close">X</button>
 		</${headerTag}>
@@ -9,7 +9,7 @@ function createHeadTag(headerTag) {
 
 function createTextTag(textType) {
 	return `
-		<${textType} class="${textType}-text target" contenteditable="true">
+		<${textType} class="${textType}-text target getClose" contenteditable="true">
 	    	text
 			<button class="close">X</button>
 		</${textType}>
@@ -18,7 +18,7 @@ function createTextTag(textType) {
 
 function createList(listType) {
 	return `
-	<${listType} class="listTitle target" contenteditable="true">
+	<${listType} class="listTitle target getClose" contenteditable="true">
 		List Title
 		<button class="close">X</button>
 		${createListItem()}
@@ -28,9 +28,16 @@ function createList(listType) {
 
 function createListItem() {
 	return `
-	<li class="listItem target" contenteditable="true">
+	<li class="listItem target getClose" contenteditable="true">
 		List Item
+		<button class="close">X</button>
 	</li>
+	`
+}
+
+function createTableArea(){
+	return`
+	<div class="tableArea target getClose">${createTable()}</div>
 	`
 }
 
@@ -40,6 +47,19 @@ function createTable() {
 		<button class="close">X</button>
 	`
 }
+
+function createTbody(){
+	return`
+		<tbody class="tbody"></tbody>
+	`
+}
+
+function createTr(rowIndex){
+	return`
+	<tr class="rowItem-${rowIndex + 1}"></tr>
+	`
+}
+
 function createTd() {
 	return `
       <td class="tdList target" contenteditable="true">Context</td>
@@ -48,7 +68,7 @@ function createTd() {
 
 function createIframe(linkAddress){
 	return`
-	<div class="videoArea">
+	<div class="videoArea target getClose">
 		<iframe width="560" height="315" frameborder="0" allowfullscreen=""
 		allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 		src="${linkAddress}"
@@ -61,28 +81,29 @@ function createIframe(linkAddress){
 
 function createImgUpload() {
 	return `
-	<div class="uploadArea">
+	<div class="uploadArea target">
 		<label class="imgUploadTitle">Choose image file to upload
 			<input class="imgUpload" type="file" accept=".png, .jpg, .jpeg">
 		</label>
+		<button class="close">X</button>
 	</div>
 	`
 }
 
 function createImage(base64){
 	return`
-	<figure>
+	<figure class="imgBox target">
 		<img src="${base64}">
+		<button class="close">X</button>
 	</figure>
 	`
 }
 
-function createAddressInput() {
-	return `
-	<label>
-		<input class="inputAddress">
-		<button class="close">X</button>
-	<label>
+function createSubButton(){
+	return`
+		<div class="subButtonArea">
+			<button class="showLink">link</button>
+		</div>
 	`
 }
 
@@ -92,9 +113,11 @@ export {
 	createList,
 	createListItem,
 	createImgUpload,
-	createAddressInput,
-	createTable,
+	createTableArea,
+	createTbody,
+	createTr,
 	createTd,
 	createIframe,
-	createImage
+	createImage,
+	createSubButton
 }
