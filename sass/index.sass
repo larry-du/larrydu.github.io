@@ -1,21 +1,54 @@
-// .type
-//     display: none
-// .block
-//     display: block
+
+@import "./utility/_reset"
+.editor
+	position: relative
+	width: 80%
+	margin: 20px auto
+
+.editorArea
+	display: flex
+	justify-content: center
+	position: fixed
+	top: 0
+	right: 0
+	left: 0
+	div+div
+		margin-left: 20px
+
+.editorBaseButton
+	margin-top: 10px
+	text-align: center
+	position: relative
+	button
+		border: 1px solid lightblue
+		background-color: #fff
+		padding: 8px
+		cursor: pointer
+		&:hover
+			background-color: red
+
+figure
+	img
+		width: 100%
+
+button+button
+		margin-left: 5px
 
 .noShow
-    display: none
+	display: none
 
 #render-area
-    width: 80%
-    margin: 20px auto
-    padding: 80px 20px
-    border: 1px solid
+	padding: 80px 20px
+	margin-top: 80px
+	border: 1px solid
 
 .tableArea
-    width: 90%
-    overflow-x: auto
+	width: 90%
+	overflow-x: auto
 
 td
-    border: 1px solid blue
-    padding: 10px
+	border: 1px solid blue
+	padding: 10px
+
+.submitButton
+	background-color: lightgreen

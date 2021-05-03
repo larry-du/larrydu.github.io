@@ -62,7 +62,7 @@ function createTr(rowIndex){
 
 function createTd() {
 	return `
-      <td class="tdList target" contenteditable="true">Context</td>
+      <td class="tdList target" contenteditable="true"></td>
 	`
 }
 
@@ -92,7 +92,7 @@ function createImgUpload() {
 
 function createImage(base64){
 	return`
-	<figure class="imgBox target">
+	<figure class="imgBox getClose">
 		<img src="${base64}">
 		<button class="close">X</button>
 	</figure>
@@ -103,6 +103,35 @@ function createSubButton(){
 	return`
 		<div class="subButtonArea">
 			<button class="showLink">link</button>
+			<button class="close">X</button>
+		</div>
+	`
+}
+
+function createCardImg(base64){
+	return`
+		<img src="${base64}">
+	`
+}
+
+function createCard(){
+	return`
+		<div class="card">
+			<figure class="cardImg getClose">
+				${createImgUpload()}
+				<button class="close">X</button>
+			</figure>
+			<div class="cardBody">
+				<h3 class="cardTitle target getClose" contenteditable="true">
+					cardTitle
+					<button class="close">X</button>
+				</h3>
+				<p class="cardText target getClose" contenteditable="true">
+					cardText
+					<button class="close">X</button>
+				</p>
+			</div>
+			<button class="close">X</button>
 		</div>
 	`
 }
@@ -119,5 +148,7 @@ export {
 	createTd,
 	createIframe,
 	createImage,
-	createSubButton
+	createSubButton,
+	createCard,
+	createCardImg
 }

@@ -10,49 +10,59 @@
 </head>
 
 <body>
-  <div id="render-area">
-    <div id="content"></div>
-  </div>
-  <div class="editorArea">
-    <div class="headerButton"></div>
-    <div class="textButton">
-      <button class="normalText" data-textType="p">
-        < p />
-      </button>
-      <button class="normalText" data-textType="span">
-        < span />
-      </button>
+  <div class="editor">
+
+    <div id="render-area">
+      <div id="content"></div>
     </div>
-    <div class="listButton">
-      <button class="addList" data-listType="ul">List</button>
-      <button class="addList" data-listType="ol">OL</button>
+    <div class="submitButton editorBaseButton">
+      <button class="submit">submit</button>
     </div>
-    <div class="tableButton">
-      <button class="addTable">table</button>
-      <div class="tableCount noShow">
-        <label for="tableRow"> row
-          <input id="tableRow" class="tableInput" type="text">
-        </label>
-        <label for="tableCol"> col
-          <input id="tableCol" class="tableInput" type="text">
-        </label>
-        <button class="createTable">Create Table</button>
+    <div class="editorArea">
+      <div class="headerButton editorBaseButton"></div>
+      <div class="textButton editorBaseButton">
+        <button class="normalText" data-textType="p">
+          < p />
+        </button>
+        <button class="normalText" data-textType="span">
+          < span />
+        </button>
+      </div>
+      <div class="listButton editorBaseButton">
+        <button class="addList" data-listType="ul">List</button>
+        <button class="addList" data-listType="ol">OL</button>
+      </div>
+      <div class="tableButton editorBaseButton">
+        <button class="addTable">table</button>
+        <div class="tableCount noShow">
+          <label for="tableRow"> row
+            <input id="tableRow" class="tableInput" type="text">
+          </label>
+          <label for="tableCol"> col
+            <input id="tableCol" class="tableInput" type="text">
+          </label>
+          <button class="createTable">Create Table</button>
+        </div>
+      </div>
+      <div class="iframeButton editorBaseButton">
+        <button class="addIframe">iframe</button>
+        <div class="videoLink noShow">
+          <label for="videoAddress"> Video Link
+            <input id="videoAddress" class="videoInput" type="text">
+          </label>
+          <button class="createVideoLink">Create iframe</button>
+        </div>
+      </div>
+      <div class="imgButton editorBaseButton">
+        <button class="addImg">img</button>
+      </div>
+      <div class="cardButton editorBaseButton">
+        <button class="addCard">card</button>
       </div>
     </div>
-    <div class="iframeButton">
-      <button class="addIframe">iframe</button>
-      <div class="videoLink noShow">
-        <label for="videoAddress"> Video Link
-          <input id="videoAddress" class="videoInput" type="text">
-        </label>
-        <button class="createVideoLink">Create iframe</button>
-      </div>
-    </div>
-    <div class="imgButton">
-      <button class="addImg">img</button>
-    </div>
+
+
   </div>
-  <button class="submit">submit</button>
   <script type="module" src="./js/index.js"></script>
 </body>
 

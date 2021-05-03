@@ -10,7 +10,9 @@ import {
   createTd,
 	createIframe,
 	createImage,
-	createSubButton
+	createSubButton,
+	createCard,
+	createCardImg
 } from "./template/AllTags.js";
 import {
 	addTitleTag,
@@ -19,7 +21,8 @@ import {
 	addTableTag,
 	addIframeTag,
 	addRandomImg,
-	addLastPositionImg 
+	addLastPositionImg,
+	addCardGroup 
 } from "./component/AddTag.js";
 
 function main (){
@@ -53,6 +56,7 @@ function eventBinding(){
 	const tableButton = document.querySelector(".tableButton");
 	const iframeButton = document.querySelector(".iframeButton");
 	const imgButton = document.querySelector(".addImg");
+	const cardButton = document.querySelector(".cardButton")
 
 	headerButton.addEventListener("click",addTitle);
 	textButton.addEventListener("click",addText);
@@ -62,6 +66,7 @@ function eventBinding(){
 	iframeButton.addEventListener("click",addIframe);
 	
 	imgButton.addEventListener("click",addImg);
+	cardButton.addEventListener("click",addCard)
 	submit.addEventListener("click",submitDom);
 }
 
@@ -112,18 +117,18 @@ function addIframe(event){
 }
 
 function addImg(){
-	const currentFocus = window.getSelection().anchorNode;
-	// // console.log(currentFocus.parentNode.classList.contains("submit"));
-	// if(currentFocus){
-	// 	console.log(currentFocus.parentNode);
-	// 	const isSubmitButton = currentFocus.parentNode.classList.contains("submit")
-	// 	// console.log(isSubmitButton);
-	// 	if(isSubmitButton)	return addLastPositionImg(createImgUpload,createImage);
-	// } else {
-	// 	return addLastPositionImg(createImgUpload,createImage);
-	// }
+	const selection = window.getSelection();
+	const currentFocus = selection.anchorNode;
 	if(!currentFocus)return addLastPositionImg(createImgUpload,createImage);
+	const range = selection.getRangeAt(0);
+	if(range.startContainer.data === "submit") return addLastPositionImg(createImgUpload,createImage);
 	addRandomImg(currentFocus,createImgUpload,createImage);
+}
+
+function addCard(event){
+	const isAddCard = event.target.classList.contains("addCard");
+	if(!isAddCard)return
+	addCardGroup(createCard,createCardImg,createSubButton)
 }
 
 function initVideo(){
@@ -172,9 +177,13 @@ function initTable(){
 
 function submitDom(){
 		const [...targets] = document.querySelectorAll(".target");
-		const [...closeButtons]= document.querySelectorAll(".close")
+		const [...closeButtons]= document.querySelectorAll(".close");
+		const [...uploadArea] = document.querySelectorAll(".uploadArea");
 		targets.forEach(dom=>{
 			dom.removeAttribute("contenteditable")
+		})
+		uploadArea.forEach(upload=>{
+			upload.remove();
 		})
 		closeButtons.forEach(close=>{
 			close.remove()
