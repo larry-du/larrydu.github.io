@@ -1,5 +1,8 @@
-
 @import "./utility/_reset"
+
+:root
+	--tableWidth: 100%
+
 .editor
 	position: relative
 	width: 80%
@@ -13,17 +16,19 @@
 	right: 0
 	left: 0
 	div+div
-		margin-left: 20px
+	margin-left: 20px
 
 .editorBaseButton
 	margin-top: 10px
+	font-size: 0
 	text-align: center
 	position: relative
 	button
 		border: 1px solid lightblue
 		background-color: #fff
-		padding: 8px
+		padding: 5px
 		cursor: pointer
+		font-size: 16px
 		&:hover
 			background-color: red
 
@@ -31,24 +36,97 @@ figure
 	img
 		width: 100%
 
-button+button
-		margin-left: 5px
+// button+button
+// 		margin-left: 5px
 
-.noShow
-	display: none
+.title,.p-text,.listTitle,.tableArea,.videoArea,.imgBox
+	position: relative
+	.close
+		position: absolute
+		top: 0
+		right: 0
+// .card
+// 	position: relative
+// 	.cardTitle,.cardText
+// 		position: relative
+// 		.close
+// 			position: absolute
+// 			top: 0
+// 			right: 0
+// 	.cardImg
+// 		display: inline-block
+// 		vertical-align: middle
+// 	.cardBody
+// 		display: inline-block
+// 		vertical-align: middle
+// 		// span
+// 		// 	padding: 5px
+// 	.cardClose
+// 		position: absolute
+// 		top: 0
+// 		right: 0
+
+.card
+	display: flex
+	justify-content: space-around
+	.close
+		margin-left: 10px
+	.cardTitle,.cardText
+		padding: 5px
+
+.subButtonArea
+	position: relative
 
 #render-area
 	padding: 80px 20px
 	margin-top: 80px
-	border: 1px solid
+	border: 1px solid blue
 
 .tableArea
 	width: 90%
 	overflow-x: auto
+.tableForm
+	width: 100%
+
+.tableCount
+	position: absolute
+	display: flex
+	font-size: 16px
+	label
+		display: flex
+		justify-content: center
+		align-items: center
+		margin-right: 10px
+		border: 1px solid lightblue
+	input
+		padding: 5px
+		border: none
+
+.trRow
+	text-align: center
 
 td
 	border: 1px solid blue
 	padding: 10px
+	width: var(--tableWidth)
+.iframeButton
+
+.videoLink
+	position: absolute
+	display: flex
+	font-size: 16px
+	label
+		display: flex
+		justify-content: center
+		align-items: center
+		margin-right: 10px
+		border: 1px solid lightblue
+	input
+		padding: 5px
+		border: none
 
 .submitButton
 	background-color: lightgreen
+
+.noShow
+	display: none

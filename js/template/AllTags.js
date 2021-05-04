@@ -1,7 +1,7 @@
 function createHeadTag(headerTag) {
 	return `
-		<${headerTag} class="title target getClose" contenteditable="true">
-			title 
+		<${headerTag} class="title getClose">
+			<span class="target"  contenteditable="true">title</span> 
 			<button class="close">X</button>
 		</${headerTag}>
 	`
@@ -28,9 +28,8 @@ function createList(listType) {
 
 function createListItem() {
 	return `
-	<li class="listItem target getClose" contenteditable="true">
+	<li class="listItem target" contenteditable="true">
 		List Item
-		<button class="close">X</button>
 	</li>
 	`
 }
@@ -56,7 +55,7 @@ function createTbody(){
 
 function createTr(rowIndex){
 	return`
-	<tr class="rowItem-${rowIndex + 1}"></tr>
+	<tr class="trRow rowItem-${rowIndex + 1}"></tr>
 	`
 }
 
@@ -82,7 +81,7 @@ function createIframe(linkAddress){
 function createImgUpload() {
 	return `
 	<div class="uploadArea target">
-		<label class="imgUploadTitle">Choose image file to upload
+		<label class="imgUploadTitle">
 			<input class="imgUpload" type="file" accept=".png, .jpg, .jpeg">
 		</label>
 		<button class="close">X</button>
@@ -116,22 +115,21 @@ function createCardImg(base64){
 
 function createCard(){
 	return`
-		<div class="card">
+		<div class="card getClose">
 			<figure class="cardImg getClose">
 				${createImgUpload()}
-				<button class="close">X</button>
 			</figure>
 			<div class="cardBody">
-				<h3 class="cardTitle target getClose" contenteditable="true">
-					cardTitle
+				<h3 class="cardTitle getClose" >
+					<span class="target" contenteditable="true">cardTitle</span>
 					<button class="close">X</button>
 				</h3>
-				<p class="cardText target getClose" contenteditable="true">
-					cardText
+				<p class="cardText getClose">
+					<span class="target" contenteditable="true">cardText</span>
 					<button class="close">X</button>
 				</p>
 			</div>
-			<button class="close">X</button>
+			<button class="close cardClose">X</button>
 		</div>
 	`
 }

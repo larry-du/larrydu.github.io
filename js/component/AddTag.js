@@ -37,6 +37,7 @@ function addListTag({listTitle,createSubButton}) {
 
 function addTableTag({ row, col }, { createTableArea,createTbody,createTr,createTd },createSubButton) {
 	content.insertAdjacentHTML('beforeend', createTableArea());
+	document.documentElement.style.setProperty('--tableWidth', `${100/col}%`);
 
 	const totalRow = Array(Number(row)).fill(0);
 	const totalCol = Array(Number(col)).fill(0);
