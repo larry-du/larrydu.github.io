@@ -103,7 +103,7 @@ function createSubButton(){
 		<div class="subButtonArea">
 			<button class="showLink"> < a > </button>
 			<button class="showBold"> < B > </button>
-			<button class="showHightLight"> Hight Light </button>
+			<button class="showHighLight"> High Light </button>
 			<button class="close">X</button>
 		</div>
 	`

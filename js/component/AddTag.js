@@ -138,9 +138,9 @@ function addToolbar(currentDom,createSubButton){
 	const checkSubButtonArea =document.querySelector(".subButtonArea");
 	const isShowLinkButton = currentDom.classList.contains("showLink");
 	const isShowBoldButton = currentDom.classList.contains("showBold");
-	const isShowHightLightButton = currentDom.classList.contains("showHightLight");
+	const isshowHighLightButton = currentDom.classList.contains("showHighLight");
 	// const isShowNormalButton = currentDom.classList.contains("showNormal");
-	if (isCollapse||checkSubButtonArea||isShowLinkButton||isShowBoldButton||isShowHightLightButton) return
+	if (isCollapse||checkSubButtonArea||isShowLinkButton||isShowBoldButton||isshowHighLightButton) return
 
 	const selectedString = window.getSelection().toString();
 	const isEmpty = /\s/.test(`${selectedString}`);
@@ -158,7 +158,7 @@ function bindingToolBar(event,currentDom,selectedString){
 	const currentButton = event.target
 	const isLink = event.target.classList.contains("showLink");
 	const isBold = event.target.classList.contains("showBold");
-	const isHightLight = event.target.classList.contains("showHightLight");
+	const isHighLight = event.target.classList.contains("showHighLight");
 	// const isNormal = event.target.classList.contains("showNormal");
 	if(isLink){
 		currentButton.addEventListener("click",addLinkAddress(currentDom,currentButton,selectedString));
@@ -166,8 +166,8 @@ function bindingToolBar(event,currentDom,selectedString){
 	if(isBold){
 		currentButton.addEventListener("click", addBold(currentDom,selectedString));
 	}
-	if(isHightLight){
-		currentButton.addEventListener("click", addHightLight(currentDom,selectedString));
+	if(isHighLight){
+		currentButton.addEventListener("click", addHighLight(currentDom,selectedString));
 	}
 	// if(isNormal){
 	// 	currentButton.addEventListener("click", addNormal(currentDom,selectedString));
@@ -181,12 +181,12 @@ function bindingToolBar(event,currentDom,selectedString){
 // 	currentDom.querySelector(".subButtonArea").remove();
 // }
 
-function addHightLight(currentDom,selectedString){
+function addHighLight(currentDom,selectedString){
 	const checkTargetText = currentDom.querySelector(".targetText");
 
 	if(checkTargetText) {
-		const getHightLight = checkTargetText.classList.contains("hightLight");
-		getHightLight? currentDom.querySelector(".subButtonArea").remove() : checkTargetText.classList.add("hightLight");
+		const checkHighLight = checkTargetText.classList.contains("highLight");
+		checkHighLight? "" : checkTargetText.classList.add("highLight");
 		return currentDom.querySelector(".subButtonArea").remove();
 	}
 	currentDom.innerHTML = currentDom.innerHTML.replace(
@@ -194,7 +194,7 @@ function addHightLight(currentDom,selectedString){
 		`<span class="targetText">${selectedString}</span>`
 	);
 	const targetText = currentDom.querySelector(".targetText");
-	targetText.classList.add("hightLight");
+	targetText.classList.add("highLight");
 	currentDom.querySelector(".subButtonArea").remove();
 }
 
@@ -202,8 +202,8 @@ function addBold(currentDom,selectedString){
 	const checkTargetText = currentDom.querySelector(".targetText");
 
 	if(checkTargetText) {
-		const getBold = checkTargetText.classList.contains("bold")
-		getBold? currentDom.querySelector(".subButtonArea").remove() : checkTargetText.classList.add("bold");
+		const checkBold = checkTargetText.classList.contains("bold")
+		checkBold? "" : checkTargetText.classList.add("bold");
 		return currentDom.querySelector(".subButtonArea").remove();
 	}
 	currentDom.innerHTML = currentDom.innerHTML.replace(
