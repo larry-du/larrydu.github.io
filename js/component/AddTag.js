@@ -135,11 +135,12 @@ function addCardGroup(createCard,createCardImg,createSubButton){
 
 function addToolbar(currentDom,createSubButton){
   const isCollapse = window.getSelection().isCollapsed;
+	const checkSubButtonArea =document.querySelector(".subButtonArea");
 	const isShowLinkButton = currentDom.classList.contains("showLink");
 	const isShowBoldButton = currentDom.classList.contains("showBold");
 	const isShowHightLightButton = currentDom.classList.contains("showHightLight");
 	// const isShowNormalButton = currentDom.classList.contains("showNormal");
-	if (isCollapse||isShowLinkButton||isShowBoldButton||isShowHightLightButton) return
+	if (isCollapse||checkSubButtonArea||isShowLinkButton||isShowBoldButton||isShowHightLightButton) return
 
 	const selectedString = window.getSelection().toString();
 	const isEmpty = /\s/.test(`${selectedString}`);
@@ -181,11 +182,11 @@ function bindingToolBar(event,currentDom,selectedString){
 // }
 
 function addHightLight(currentDom,selectedString){
-	const getTargetText = currentDom.querySelector(".targetText");
+	const checkTargetText = currentDom.querySelector(".targetText");
 
-	if(getTargetText) {
-		const getHightLight = getTargetText.classList.contains("hightLight");
-		getHightLight? currentDom.querySelector(".subButtonArea").remove() : getTargetText.classList.add("hightLight");
+	if(checkTargetText) {
+		const getHightLight = checkTargetText.classList.contains("hightLight");
+		getHightLight? currentDom.querySelector(".subButtonArea").remove() : checkTargetText.classList.add("hightLight");
 		return currentDom.querySelector(".subButtonArea").remove();
 	}
 	currentDom.innerHTML = currentDom.innerHTML.replace(
@@ -198,11 +199,11 @@ function addHightLight(currentDom,selectedString){
 }
 
 function addBold(currentDom,selectedString){
-	const getTargetText = currentDom.querySelector(".targetText");
+	const checkTargetText = currentDom.querySelector(".targetText");
 
-	if(getTargetText) {
-		const getBold = getTargetText.classList.contains("bold")
-		getBold? currentDom.querySelector(".subButtonArea").remove() : getTargetText.classList.add("bold");
+	if(checkTargetText) {
+		const getBold = checkTargetText.classList.contains("bold")
+		getBold? currentDom.querySelector(".subButtonArea").remove() : checkTargetText.classList.add("bold");
 		return currentDom.querySelector(".subButtonArea").remove();
 	}
 	currentDom.innerHTML = currentDom.innerHTML.replace(
