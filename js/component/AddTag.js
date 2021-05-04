@@ -135,9 +135,11 @@ function addCardGroup(createCard,createCardImg,createSubButton){
 
 function addToolbar(currentDom,createSubButton){
   const isCollapse = window.getSelection().isCollapsed;
-  const isClickTwice = currentDom.querySelector(".showLink");
 	const isShowLinkButton = currentDom.classList.contains("showLink");
-	if (isCollapse||isShowLinkButton||isClickTwice) return
+	const isShowBoldButton = currentDom.classList.contains("showBold");
+	const isShowHightLightButton = currentDom.classList.contains("showHightLight");
+	// const isShowNormalButton = currentDom.classList.contains("showNormal");
+	if (isCollapse||isShowLinkButton||isShowBoldButton||isShowHightLightButton) return
 
 	const selectedString = window.getSelection().toString();
 	const isEmpty = /\s/.test(`${selectedString}`);
@@ -152,11 +154,64 @@ function addToolbar(currentDom,createSubButton){
 }
 
 function bindingToolBar(event,currentDom,selectedString){
+	const currentButton = event.target
 	const isLink = event.target.classList.contains("showLink");
+	const isBold = event.target.classList.contains("showBold");
+	const isHightLight = event.target.classList.contains("showHightLight");
+	// const isNormal = event.target.classList.contains("showNormal");
 	if(isLink){
-		const currentButton = event.target
 		currentButton.addEventListener("click",addLinkAddress(currentDom,currentButton,selectedString));
 	}
+	if(isBold){
+		currentButton.addEventListener("click", addBold(currentDom,selectedString));
+	}
+	if(isHightLight){
+		currentButton.addEventListener("click", addHightLight(currentDom,selectedString));
+	}
+	// if(isNormal){
+	// 	currentButton.addEventListener("click", addNormal(currentDom,selectedString));
+	// }
+}
+// function addNormal(currentDom,selectedString){
+// 	currentDom.innerHTML = currentDom.innerHTML.replace(
+// 		`<span class="targetText">${selectedString}</span>`,
+// 		`${selectedString}`
+// 	);
+// 	currentDom.querySelector(".subButtonArea").remove();
+// }
+
+function addHightLight(currentDom,selectedString){
+	const getTargetText = currentDom.querySelector(".targetText");
+
+	if(getTargetText) {
+		const getHightLight = getTargetText.classList.contains("hightLight");
+		getHightLight? currentDom.querySelector(".subButtonArea").remove() : getTargetText.classList.add("hightLight");
+		return currentDom.querySelector(".subButtonArea").remove();
+	}
+	currentDom.innerHTML = currentDom.innerHTML.replace(
+		`${selectedString}`,
+		`<span class="targetText">${selectedString}</span>`
+	);
+	const targetText = currentDom.querySelector(".targetText");
+	targetText.classList.add("hightLight");
+	currentDom.querySelector(".subButtonArea").remove();
+}
+
+function addBold(currentDom,selectedString){
+	const getTargetText = currentDom.querySelector(".targetText");
+
+	if(getTargetText) {
+		const getBold = getTargetText.classList.contains("bold")
+		getBold? currentDom.querySelector(".subButtonArea").remove() : getTargetText.classList.add("bold");
+		return currentDom.querySelector(".subButtonArea").remove();
+	}
+	currentDom.innerHTML = currentDom.innerHTML.replace(
+		`${selectedString}`,
+		`<span class="targetText">${selectedString}</span>`
+	);
+	const targetText = currentDom.querySelector(".targetText");
+	targetText.classList.add("bold");
+	currentDom.querySelector(".subButtonArea").remove();
 }
 
 function addLinkAddress(currentDom,currentButton,selectedString){

@@ -101,7 +101,9 @@ function createImage(base64){
 function createSubButton(){
 	return`
 		<div class="subButtonArea">
-			<button class="showLink">link</button>
+			<button class="showLink"> < a > </button>
+			<button class="showBold"> < B > </button>
+			<button class="showHightLight"> Hight Light </button>
 			<button class="close">X</button>
 		</div>
 	`
