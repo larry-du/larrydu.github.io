@@ -5,7 +5,7 @@ function addTitleTag({titleTag,createSubButton}) {
 	const [...titles] = document.querySelectorAll(".title");
 	const lastData = titles[titles.length-1];
 	lastData.addEventListener("click", (event) => {
-			addToolbar(event.target,createSubButton);
+			addToolbar(event.currentTarget,createSubButton);
 		});
 }
 
@@ -14,7 +14,7 @@ function addTextTag({ textType, textTag,createSubButton}) {
 	const [...texts] = document.querySelectorAll(`.${textType}-text`);
 	const lastData = texts[texts.length-1];
 		lastData.addEventListener("click", (event) => {
-			addToolbar(event.target,createSubButton);
+			addToolbar(event.currentTarget,createSubButton);
 		});
 }
 
@@ -24,20 +24,15 @@ function addListTag({listTitle,createSubButton}) {
 	const lastData = listTitles[listTitles.length-1];
 
 	lastData.addEventListener("click", (event) => {
-		const isTitle = event.target.classList.contains("text");
-		const isItem = event.target.classList.contains("listItem");
-		if (isTitle) {
-			addToolbar(event.target,createSubButton);
-		}
-		if (isItem) {
-			addToolbar(event.target,createSubButton);
-		}
+		const isItem = event.target.classList.contains("listLi");
+		if (isItem)return addToolbar(event.target,createSubButton);
+		addToolbar(event.currentTarget,createSubButton);
 	})
 }
 
 function addTableTag({ row, col }, { createTableArea,createTbody,createTr,createTd },createSubButton) {
 	content.insertAdjacentHTML('beforeend', createTableArea());
-	document.documentElement.style.setProperty('--tableWidth', `${100/col}%`);
+	// document.documentElement.style.setProperty('--tableWidth', `${100/col}%`);
 
 	const totalRow = Array(Number(row)).fill(0);
 	const totalCol = Array(Number(col)).fill(0);
@@ -55,10 +50,10 @@ function addTableTag({ row, col }, { createTableArea,createTbody,createTr,create
 		})
 	})
 
-	const [...tdLists] = document.querySelectorAll(".tdList .text");
+	const [...tdLists] = document.querySelectorAll(".tdList");
 	tdLists.forEach(tdList=>{
 		tdList.addEventListener("click",(event)=>{
-			addToolbar(event.target,createSubButton);
+			addToolbar(event.currentTarget.parentNode,createSubButton);
 		})
 	})
 }
@@ -133,14 +128,24 @@ function addToolbar(currentDom,createSubButton){
 	const isShowLinkButton = currentDom.classList.contains("showLink");
 	const isShowBoldButton = currentDom.classList.contains("showBold");
 	const isShowHighLightButton = currentDom.classList.contains("showHighLight");
+	const isForTextLeft = currentDom.classList.contains("forTextLeft");
+	const isForTextCenter = currentDom.classList.contains("forTextCenter");
+	const isForTextRight = currentDom.classList.contains("forTextRight");
+	// console.log(currentDom);
 	// const isShowNormalButton = currentDom.classList.contains("showNormal");
-	if (isCollapse||isShowLinkButton||isShowBoldButton||isShowHighLightButton) return
+	if (isCollapse||
+		isShowLinkButton||
+		isShowBoldButton||
+		isShowHighLightButton||
+		isForTextLeft||
+		isForTextCenter||
+		isForTextRight) return
 	if(checkSubButtonArea)checkSubButtonArea.remove();
 
 	const selectedString = window.getSelection().toString();
 	// const isEmpty = /\s/.test(`${selectedString}`);
 	// if (isEmpty) return
-	currentDom.parentNode.insertAdjacentHTML('beforeend',createSubButton());
+	currentDom.insertAdjacentHTML('beforeend',createSubButton());
 	const [...subButtonAreas] = document.querySelectorAll(".subButtonArea");
 	const lastData = subButtonAreas[subButtonAreas.length-1];
 	lastData.addEventListener("click",(event)=>{
@@ -153,15 +158,27 @@ function bindingToolBar(event,currentDom,selectedString){
 	const isLink = event.target.classList.contains("showLink");
 	const isBold = event.target.classList.contains("showBold");
 	const isHighLight = event.target.classList.contains("showHighLight");
+	const isTextLeft = event.target.classList.contains("forTextLeft");
+	const isTextCenter = event.target.classList.contains("forTextCenter");
+	const isTextRight = event.target.classList.contains("forTextRight");
 	// const isNormal = event.target.classList.contains("showNormal");
 	if(isLink){
-		currentButton.addEventListener("click",addLinkAddress(currentDom,currentButton,selectedString));
+		currentButton.addEventListener("click",addLinkAddress(currentDom,selectedString));
 	}
 	if(isBold){
 		currentButton.addEventListener("click", addBold(currentDom,selectedString));
 	}
 	if(isHighLight){
 		currentButton.addEventListener("click", addHighLight(currentDom,selectedString));
+	}
+	if(isTextLeft){
+		currentButton.addEventListener("click", addTextPosition("left",currentDom));
+	}
+	if(isTextCenter){
+		currentButton.addEventListener("click", addTextPosition("center",currentDom));
+	}
+	if(isTextRight){
+		currentButton.addEventListener("click", addTextPosition("right",currentDom));
 	}
 	// if(isNormal){
 	// 	currentButton.addEventListener("click", addNormal(currentDom,selectedString));
@@ -174,15 +191,15 @@ function bindingToolBar(event,currentDom,selectedString){
 // 	);
 // 	currentDom.querySelector(".subButtonArea").remove();
 // }
+function addTextPosition(textPosition,currentDom){
+	currentDom.setAttribute("style", `text-align:${textPosition}`)
+	document.querySelector(".subButtonArea").remove();
+}
 
 function addHighLight(currentDom,selectedString){
-	// console.log(currentDom);
 	const checkTargetText = currentDom.querySelector(".targetText");
-
 	if(checkTargetText) {
-		console.log(checkTargetText);
 		const checkHighLight = checkTargetText.classList.contains("highLight");
-		console.log(checkHighLight);
 		checkHighLight? "" : checkTargetText.classList.add("highLight");
 		return document.querySelector(".subButtonArea").remove();
 	}
@@ -192,7 +209,7 @@ function addHighLight(currentDom,selectedString){
 	);
 	const targetText = currentDom.querySelector(".targetText");
 	targetText.classList.add("highLight");
-	currentDom.parentNode.querySelector(".subButtonArea").remove();
+	document.querySelector(".subButtonArea").remove();
 }
 
 function addBold(currentDom,selectedString){
@@ -208,13 +225,18 @@ function addBold(currentDom,selectedString){
 	);
 	const targetText = currentDom.querySelector(".targetText");
 	targetText.classList.add("bold");
-	currentDom.parentNode.querySelector(".subButtonArea").remove();
+	document.querySelector(".subButtonArea").remove();
 }
 
-function addLinkAddress(currentDom,currentButton,selectedString){
-	const subButtonArea = currentButton.parentNode;
-	subButtonArea.insertAdjacentHTML('beforeend',`<input class="typeAddress">`);
+function addLinkAddress(currentDom,selectedString){
+	// const subButtonArea = currentButton.parentNode;
+	console.log(selectedString);
+	const subButtonArea = currentDom.querySelector(".subButtonArea");
+	// const subButtonArea = currentDom.querySelector(".subButtonArea");
+	// subButtonArea.insertAdjacentHTML('beforeend',`<input class="typeAddress">`);
+	// console.log(subButtonArea);
 	const typeAddress = subButtonArea.querySelector(".typeAddress");
+	typeAddress.classList.remove("noShow")
 	typeAddress.addEventListener("change",(typeAddressEvent)=>{
 		const webAddress = typeAddressEvent.target.value;
 		typeAddress.addEventListener("keyup",(keyEvent)=>{
@@ -223,7 +245,8 @@ function addLinkAddress(currentDom,currentButton,selectedString){
 					`${selectedString}`,
 					`<a href="${webAddress}">${selectedString}</a>`
 				);
-				subButtonArea.remove();
+				// typeAddress.classList.add("noShow")
+				document.querySelector(".subButtonArea").remove();
 			}
 		})
 	})

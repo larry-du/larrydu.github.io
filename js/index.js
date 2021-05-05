@@ -194,6 +194,8 @@ function initTable(){
 }
 
 function submitHTML(){
+		const checkContent = document.querySelector("#content").childNodes.length;
+		if(!checkContent)return alert("Please type something");
 		const [...targets] = document.querySelectorAll(".target");
 		const [...closeButtons]= document.querySelectorAll(".close");
 		const [...uploadArea] = document.querySelectorAll(".uploadArea");

@@ -1,7 +1,7 @@
 function createHeadTag(headerTag) {
 	return `
 		<${headerTag} class="title getClose">
-			<span class="text target"  contenteditable="true">title</span> 
+			<span class="letter target"  contenteditable="true">title</span> 
 			<button class="close">X</button>
 		</${headerTag}>
 	`
@@ -10,7 +10,7 @@ function createHeadTag(headerTag) {
 function createTextTag(textType) {
 	return `
 		<${textType} class="${textType}-text  getClose" >
-	    	<span class="text target" contenteditable="true">text</span>
+	    	<span class="letter target" contenteditable="true">text</span>
 			<button class="close">X</button>
 		</${textType}>
 	`
@@ -18,8 +18,8 @@ function createTextTag(textType) {
 
 function createList(listType) {
 	return `
-	<${listType} class="listTitle getClose" >
-		<span class="text target" contenteditable="true">List Title</span>
+	<${listType} class="listTitle target getClose"  contenteditable="true">
+		<span class="letter">List Title</span>
 		<button class="close">X</button>
 		${createListItem()}
 	</${listType}>
@@ -28,8 +28,8 @@ function createList(listType) {
 
 function createListItem() {
 	return `
-	<li class="listItem">
-		<span class="text target" contenteditable="true">List Item</span>
+	<li class="listLi">
+		List Item
 	</li>
 	`
 }
@@ -62,7 +62,7 @@ function createTr(rowIndex){
 function createTd() {
 	return `
       <td class="tdList">
-	  	<span class="text target" contenteditable="true">content</span>
+	  	<span class="letter target" contenteditable="true">content</span>
 	  </td>
 	`
 }
@@ -104,8 +104,12 @@ function createSubButton(){
 	return`
 		<div class="subButtonArea">
 			<button class="showLink"> < a > </button>
+			<input class="typeAddress noShow">
 			<button class="showBold"> < B > </button>
 			<button class="showHighLight"> High Light </button>
+			<button class="forTextLeft"> Text Left </button>
+			<button class="forTextCenter"> Text Center </button>
+			<button class="forTextRight"> Text Right </button>
 			<button class="close">X</button>
 		</div>
 	`
@@ -125,11 +129,11 @@ function createCard(imgPosition){
 			</figure>
 			<div class="cardBody">
 				<h3 class="cardTitle getClose" >
-					<span class="text target" contenteditable="true">cardTitle</span>
+					<span class="letter target" contenteditable="true">cardTitle</span>
 					<button class="close">X</button>
 				</h3>
 				<p class="cardText getClose">
-					<span class="text target" contenteditable="true">cardText</span>
+					<span class="letter target" contenteditable="true">cardText</span>
 					<button class="close">X</button>
 				</p>
 			</div>
