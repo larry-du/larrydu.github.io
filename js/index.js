@@ -31,6 +31,7 @@ function main (){
 	eventBinding();
 	initTable();
 	initVideo();
+	initImgPosition()
 }
 
 function renderTitleButton(){
@@ -56,7 +57,7 @@ function eventBinding(){
 	const tableButton = document.querySelector(".tableButton");
 	const iframeButton = document.querySelector(".iframeButton");
 	const imgButton = document.querySelector(".addImg");
-	const cardButton = document.querySelector(".cardButton")
+	const cardButton = document.querySelector(".cardButton");
 
 	headerButton.addEventListener("click",addTitle);
 	textButton.addEventListener("click",addText);
@@ -66,7 +67,7 @@ function eventBinding(){
 	iframeButton.addEventListener("click",addIframe);
 	
 	imgButton.addEventListener("click",addImg);
-	cardButton.addEventListener("click",addCard)
+	cardButton.addEventListener("click",addCard);
 	submit.addEventListener("click",submitDom);
 }
 
@@ -128,11 +129,28 @@ function addImg(){
 function addCard(event){
 	const isAddCard = event.target.classList.contains("addCard");
 	if(!isAddCard)return
-	addCardGroup(createCard,createCardImg,createSubButton)
+	const imgPosition = document.querySelector(".imgPosition");
+	imgPosition.classList.toggle("noShow"); 
+	// addCardGroup(createCard,createCardImg,createSubButton);
+}
+
+function initImgPosition(){
+	const imgPosition = document.querySelector(".imgPosition");
+	imgPosition.addEventListener("click",(event)=>{
+		const isFirst = event.target.classList.contains("forImgFirst")
+		const isLast = event.target.classList.contains("forImgLast")
+		if(isFirst){
+			addCardGroup(createCard("imgFirst"),createCardImg,createSubButton);
+		}
+		if(isLast){
+			addCardGroup(createCard("imgLast"),createCardImg,createSubButton);
+		}
+		imgPosition.classList.add("noShow")
+	})
 }
 
 function initVideo(){
-	let linkAddress = ""
+	let linkAddress = "";
 	const videoLink = document.querySelector(".videoLink");
 	const createVideoLink = videoLink.querySelector(".createVideoLink");
 	const videoInput = videoLink.querySelector(".videoInput");
@@ -141,7 +159,7 @@ function initVideo(){
 	})
 	createVideoLink.addEventListener("click",()=>{
 		if(!linkAddress) return alert("Please Enter Link");
-		addIframeTag(linkAddress,createIframe)
+		addIframeTag(linkAddress,createIframe);
 		videoInput.value="";
 		videoLink.classList.add("noShow");
 	})
@@ -179,14 +197,18 @@ function submitDom(){
 		const [...targets] = document.querySelectorAll(".target");
 		const [...closeButtons]= document.querySelectorAll(".close");
 		const [...uploadArea] = document.querySelectorAll(".uploadArea");
-		targets.forEach(dom=>{
-			dom.removeAttribute("contenteditable")
+		const [...subButtonArea] = document.querySelectorAll(".subButtonArea");
+		targets.forEach(target=>{
+			target.removeAttribute("contenteditable");
 		})
 		uploadArea.forEach(upload=>{
 			upload.remove();
 		})
 		closeButtons.forEach(close=>{
-			close.remove()
+			close.remove();
+		})
+		subButtonArea.forEach(subButton=>{
+			subButton.remove();
 		})
 		const all = document.querySelector("#content");
 		console.log(all);

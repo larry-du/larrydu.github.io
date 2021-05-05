@@ -1,7 +1,7 @@
 function createHeadTag(headerTag) {
 	return `
 		<${headerTag} class="title getClose">
-			<span class="target"  contenteditable="true">title</span> 
+			<span class="text target"  contenteditable="true">title</span> 
 			<button class="close">X</button>
 		</${headerTag}>
 	`
@@ -9,8 +9,8 @@ function createHeadTag(headerTag) {
 
 function createTextTag(textType) {
 	return `
-		<${textType} class="${textType}-text target getClose" contenteditable="true">
-	    	text
+		<${textType} class="${textType}-text  getClose" >
+	    	<span class="text target" contenteditable="true">text</span>
 			<button class="close">X</button>
 		</${textType}>
 	`
@@ -18,8 +18,8 @@ function createTextTag(textType) {
 
 function createList(listType) {
 	return `
-	<${listType} class="listTitle target getClose" contenteditable="true">
-		List Title
+	<${listType} class="listTitle getClose" >
+		<span class="text target" contenteditable="true">List Title</span>
 		<button class="close">X</button>
 		${createListItem()}
 	</${listType}>
@@ -28,15 +28,15 @@ function createList(listType) {
 
 function createListItem() {
 	return `
-	<li class="listItem target" contenteditable="true">
-		List Item
+	<li class="listItem">
+		<span class="text target" contenteditable="true">List Item</span>
 	</li>
 	`
 }
 
 function createTableArea(){
 	return`
-	<div class="tableArea target getClose">${createTable()}</div>
+		<div class="tableArea target getClose">${createTable()}</div>
 	`
 }
 
@@ -55,13 +55,15 @@ function createTbody(){
 
 function createTr(rowIndex){
 	return`
-	<tr class="trRow rowItem-${rowIndex + 1}"></tr>
+		<tr class="trRow rowItem-${rowIndex + 1}"></tr>
 	`
 }
 
 function createTd() {
 	return `
-      <td class="tdList target" contenteditable="true"></td>
+      <td class="tdList">
+	  	<span class="text target" contenteditable="true">content</span>
+	  </td>
 	`
 }
 
@@ -115,19 +117,19 @@ function createCardImg(base64){
 	`
 }
 
-function createCard(){
+function createCard(imgPosition){
 	return`
 		<div class="card getClose">
-			<figure class="cardImg getClose">
+			<figure class="${imgPosition} cardImg getClose">
 				${createImgUpload()}
 			</figure>
 			<div class="cardBody">
 				<h3 class="cardTitle getClose" >
-					<span class="target" contenteditable="true">cardTitle</span>
+					<span class="text target" contenteditable="true">cardTitle</span>
 					<button class="close">X</button>
 				</h3>
 				<p class="cardText getClose">
-					<span class="target" contenteditable="true">cardText</span>
+					<span class="text target" contenteditable="true">cardText</span>
 					<button class="close">X</button>
 				</p>
 			</div>

@@ -24,7 +24,7 @@ function addListTag({listTitle,createSubButton}) {
 	const lastData = listTitles[listTitles.length-1];
 
 	lastData.addEventListener("click", (event) => {
-		const isTitle = event.target.classList.contains("listTitle");
+		const isTitle = event.target.classList.contains("text");
 		const isItem = event.target.classList.contains("listItem");
 		if (isTitle) {
 			addToolbar(event.target,createSubButton);
@@ -55,7 +55,7 @@ function addTableTag({ row, col }, { createTableArea,createTbody,createTr,create
 		})
 	})
 
-	const [...tdLists] = document.querySelectorAll(".tdList");
+	const [...tdLists] = document.querySelectorAll(".tdList .text");
 	tdLists.forEach(tdList=>{
 		tdList.addEventListener("click",(event)=>{
 			addToolbar(event.target,createSubButton);
@@ -78,24 +78,23 @@ function addLastPositionImg(createImgUpload,createImage){
 }
 
 function addRandomImg(currentFocus,createImgUpload,createImage){
-	console.log(currentFocus);
   const currentParent = currentFocus.parentNode
-	if(currentParent.localName==="button") return alert("點擊編輯區")
+	if(currentParent.localName==="button") return alert("點擊編輯區");
 	if(currentParent.localName ==="tr"){
-		currentFocus.insertAdjacentHTML('beforeend',createImgUpload())
+		currentFocus.insertAdjacentHTML('beforeend',createImgUpload());
 	}else{
-		currentParent.insertAdjacentHTML('beforeend',createImgUpload())
+		currentParent.insertAdjacentHTML('beforeend',createImgUpload());
 	}
-  const imgUpload = document.querySelector(".imgUpload")
+  const imgUpload = document.querySelector(".imgUpload");
   imgUpload.addEventListener("change",(e)=>{
     let reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.addEventListener('load',(event)=>{
 			const uploadArea = content.querySelector(".uploadArea");
 			if(currentParent.localName==="tr"){
-				currentFocus.insertAdjacentHTML('beforeend',createImage(event.target.result))
+				currentFocus.insertAdjacentHTML('beforeend',createImage(event.target.result));
 			}else{
-				currentParent.insertAdjacentHTML('beforeend',createImage(event.target.result))
+				currentParent.insertAdjacentHTML('beforeend',createImage(event.target.result));
 			}
       // currentParent.insertAdjacentHTML('beforeend',createImage(event.target.result))
 			uploadArea.remove();
@@ -103,9 +102,8 @@ function addRandomImg(currentFocus,createImgUpload,createImage){
   })
 }
 
-
 function addCardGroup(createCard,createCardImg,createSubButton){
-	content.insertAdjacentHTML('beforeend', createCard());
+	content.insertAdjacentHTML('beforeend', createCard);
 	const imgUpload = document.querySelector(".imgUpload");
 	const [...cardBodys] = document.querySelectorAll(".cardBody");
 	const lastData = cardBodys[cardBodys.length-1];
@@ -121,14 +119,10 @@ function addCardGroup(createCard,createCardImg,createSubButton){
   })
 
 	lastData.addEventListener("click", (event) => {
-		const isCardTitle = event.target.classList.contains("cardTitle");
-		const isCardItem = event.target.classList.contains("cardText");
-		if (isCardTitle) {
-			addToolbar(event.target,createSubButton);
-		}
-		if (isCardItem) {
-			addToolbar(event.target,createSubButton);
-		}
+		const isCardTitle = event.target.parentNode.classList.contains("cardTitle");
+		const isCardItem = event.target.parentNode.classList.contains("cardText");
+		if (isCardTitle) addToolbar(event.target,createSubButton);
+		if (isCardItem) addToolbar(event.target,createSubButton);
 	})
 
 }
@@ -138,24 +132,24 @@ function addToolbar(currentDom,createSubButton){
 	const checkSubButtonArea =document.querySelector(".subButtonArea");
 	const isShowLinkButton = currentDom.classList.contains("showLink");
 	const isShowBoldButton = currentDom.classList.contains("showBold");
-	const isshowHighLightButton = currentDom.classList.contains("showHighLight");
+	const isShowHighLightButton = currentDom.classList.contains("showHighLight");
 	// const isShowNormalButton = currentDom.classList.contains("showNormal");
-	if (isCollapse||checkSubButtonArea||isShowLinkButton||isShowBoldButton||isshowHighLightButton) return
+	if (isCollapse||isShowLinkButton||isShowBoldButton||isShowHighLightButton) return
+	if(checkSubButtonArea)checkSubButtonArea.remove();
 
 	const selectedString = window.getSelection().toString();
-	const isEmpty = /\s/.test(`${selectedString}`);
-	if (isEmpty) return
-
-	currentDom.insertAdjacentHTML('beforeend',createSubButton());
+	// const isEmpty = /\s/.test(`${selectedString}`);
+	// if (isEmpty) return
+	currentDom.parentNode.insertAdjacentHTML('beforeend',createSubButton());
 	const [...subButtonAreas] = document.querySelectorAll(".subButtonArea");
 	const lastData = subButtonAreas[subButtonAreas.length-1];
 	lastData.addEventListener("click",(event)=>{
-		bindingToolBar(event,currentDom,selectedString);
+		bindingToolBar(event,currentDom,selectedString.trim());
 	})
 }
 
 function bindingToolBar(event,currentDom,selectedString){
-	const currentButton = event.target
+	const currentButton = event.target;
 	const isLink = event.target.classList.contains("showLink");
 	const isBold = event.target.classList.contains("showBold");
 	const isHighLight = event.target.classList.contains("showHighLight");
@@ -195,14 +189,13 @@ function addHighLight(currentDom,selectedString){
 	);
 	const targetText = currentDom.querySelector(".targetText");
 	targetText.classList.add("highLight");
-	currentDom.querySelector(".subButtonArea").remove();
+	currentDom.parentNode.querySelector(".subButtonArea").remove();
 }
 
 function addBold(currentDom,selectedString){
 	const checkTargetText = currentDom.querySelector(".targetText");
-
 	if(checkTargetText) {
-		const checkBold = checkTargetText.classList.contains("bold")
+		const checkBold = checkTargetText.classList.contains("bold");
 		checkBold? "" : checkTargetText.classList.add("bold");
 		return currentDom.querySelector(".subButtonArea").remove();
 	}
@@ -212,7 +205,7 @@ function addBold(currentDom,selectedString){
 	);
 	const targetText = currentDom.querySelector(".targetText");
 	targetText.classList.add("bold");
-	currentDom.querySelector(".subButtonArea").remove();
+	currentDom.parentNode.querySelector(".subButtonArea").remove();
 }
 
 function addLinkAddress(currentDom,currentButton,selectedString){
@@ -227,7 +220,7 @@ function addLinkAddress(currentDom,currentButton,selectedString){
 					`${selectedString}`,
 					`<a href="${webAddress}">${selectedString}</a>`
 				);
-				currentDom.querySelector(".subButtonArea").remove();
+				subButtonArea.remove();
 			}
 		})
 	})
