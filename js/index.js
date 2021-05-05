@@ -31,7 +31,7 @@ function main (){
 	eventBinding();
 	initTable();
 	initVideo();
-	initImgPosition()
+	initImgPosition();
 }
 
 function renderTitleButton(){
@@ -68,7 +68,7 @@ function eventBinding(){
 	
 	imgButton.addEventListener("click",addImg);
 	cardButton.addEventListener("click",addCard);
-	submit.addEventListener("click",submitDom);
+	submit.addEventListener("click",submitHTML);
 }
 
 function addTitle(event){
@@ -193,7 +193,7 @@ function initTable(){
 	})
 }
 
-function submitDom(){
+function submitHTML(){
 		const [...targets] = document.querySelectorAll(".target");
 		const [...closeButtons]= document.querySelectorAll(".close");
 		const [...uploadArea] = document.querySelectorAll(".uploadArea");

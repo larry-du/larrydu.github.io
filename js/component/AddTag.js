@@ -176,12 +176,15 @@ function bindingToolBar(event,currentDom,selectedString){
 // }
 
 function addHighLight(currentDom,selectedString){
+	// console.log(currentDom);
 	const checkTargetText = currentDom.querySelector(".targetText");
 
 	if(checkTargetText) {
+		console.log(checkTargetText);
 		const checkHighLight = checkTargetText.classList.contains("highLight");
+		console.log(checkHighLight);
 		checkHighLight? "" : checkTargetText.classList.add("highLight");
-		return currentDom.querySelector(".subButtonArea").remove();
+		return document.querySelector(".subButtonArea").remove();
 	}
 	currentDom.innerHTML = currentDom.innerHTML.replace(
 		`${selectedString}`,
@@ -197,7 +200,7 @@ function addBold(currentDom,selectedString){
 	if(checkTargetText) {
 		const checkBold = checkTargetText.classList.contains("bold");
 		checkBold? "" : checkTargetText.classList.add("bold");
-		return currentDom.querySelector(".subButtonArea").remove();
+		return document.querySelector(".subButtonArea").remove();
 	}
 	currentDom.innerHTML = currentDom.innerHTML.replace(
 		`${selectedString}`,
